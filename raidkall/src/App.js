@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./index.css";
 import Home from "./components/home.jsx";
 import ChatRoom from "./components/ChatRoom.jsx";
 
