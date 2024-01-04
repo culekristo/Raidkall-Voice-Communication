@@ -4,19 +4,17 @@ import Peer from "simple-peer";
 import { socketIOClient, io } from "socket.io-client";
 
 import { Button, IconButton, TextField } from "@mui/material";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import PhoneIcon from "@mui/icons-material/Phone";
-
+import AssignmentIcon from "@mui/icons-material/Assignment.js";
+import PhoneIcon from '@mui/icons-material/Phone.js';
 
 import "./useChat.css";
 
 const socket = io.connect("http://localhost:4000");
-const SOCKET_SERVER_URL = "http://localhost:4000";
 
-const useChat = (roomId) => {
+function UseChat() {
   // chat message variables
-  const [messages, setMessages] = useState([]);
-  const socketRef = useRef();
+  //const [messages, setMessages] = useState([]);
+  //const socketRef = useRef();
 
   // video chat variables
   const [me, setMe] = useState("");
@@ -72,7 +70,7 @@ const useChat = (roomId) => {
       userVideo.current.srcObject = stream;
     });
 
-    socket.on("callAccepted", () => {
+    socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
     });
@@ -120,7 +118,7 @@ const useChat = (roomId) => {
           </div>
         </div>
         <div className="myId">
-          <Textfield
+          <TextField
             id="filled-basic"
             label="Name"
             variant="filled"
@@ -129,12 +127,12 @@ const useChat = (roomId) => {
             style={{ marginBottom: "20px" }}
           />
           <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
-            <Button variant="contained" color="primary" startIcon={<AssignmentIcon fontSize="Large" />}>
+            <Button variant="contained" color="primary" startIcon={<AssignmentIcon fontSize="large" />}>
               Copy ID
             </Button>
           </CopyToClipboard>
 
-          <Textfield
+          <TextField
             id="filled-basic"
             label="ID to call"
             variant="filled"
@@ -143,7 +141,7 @@ const useChat = (roomId) => {
           />
 
           <div className="call-button">
-            {callAcceptedCall && !callEnded ? (
+            {callAccepted && !callEnded ? (
               <Button variant="contained" color="secondary" onClick={leaveCall}>
                 End Call
               </Button>
@@ -156,7 +154,7 @@ const useChat = (roomId) => {
           </div>
         </div>
         <div>
-          {receivingCall && !callAcceptedCall ? (
+          {receivingCall && !callAccepted ? (
             <div className="caller">
               <h1>{name} is calling...</h1>
               <Button variant="contained" color="primary" onClick={answerCall}>
@@ -197,4 +195,4 @@ const useChat = (roomId) => {
   //return { messages, sendMessage };
 };
 
-export default useChat;
+export default UseChat;
